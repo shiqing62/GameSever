@@ -1,0 +1,7 @@
+include "../player/playerData.fbs";
+namespace Game.Login;
+
+table EnterGameResponse{
+    selfPlayer:Game.Player.PlayerData;
+    visiblePlayers:[Game.Player.PlayerData];  // 视野内的其他玩家
+}

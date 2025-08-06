@@ -1,0 +1,19 @@
+include "../login/loginRequest.fbs";
+include "../login/loginResponse.fbs";
+include "../login/enterGameRequest.fbs";
+include "../login/enterGameResponse.fbs";
+namespace Game;
+
+union Payload {
+    Game.Login.LoginRequest,
+    Game.Login.LoginResponse,
+    Game.Login.EnterGameRequest,
+    Game.Login.EnterGameResponse
+}
+
+table Message {
+    msgId: int;
+    payload: Payload;
+}
+
+root_type Message;

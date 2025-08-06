@@ -1,0 +1,17 @@
+include "../Common/Vec3.fbs";
+namespace Game.Player;
+
+table PlayerData{
+    uid: uint;  // 由服务器下发的角色的uid,作为本局玩家的唯一标识
+    nickName: string;
+    characterId: int;  // 本局所选的角色id
+    roomId: int;  // 房间id,房间内人数达到上限后自动分房
+    score: int;  // 得分
+    ranking: int;  // 排名
+    pos: Game.Common.Vec3;
+    level: int;
+    hp: float;
+    weapons: [int];  // 玩家当前的武器信息，list<weaponId>
+    passives: [int];  // 当前玩家的被动信息，list<passiveId>
+    pets: [int];
+}

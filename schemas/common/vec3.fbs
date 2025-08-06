@@ -1,0 +1,7 @@
+namespace Game.Common;
+
+table Vec3 {
+    x: float;
+    y: float;
+    z: float;
+}

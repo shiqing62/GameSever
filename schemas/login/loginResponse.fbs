@@ -1,0 +1,6 @@
+include "../Common/Vec3.fbs";
+namespace Game.Login;
+
+table LoginResponse{
+    uid: uint;
+}

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": [
+//    "schemas/generated/javascript/game/common/vec3.ts",
+//    "schemas/generated/javascript/message.ts",
+//    "schemas/generated/javascript/game/message.ts",
+    // 登录
+//    "schemas/generated/javascript/game/login/login-request.ts",
+    "schemas/generated/javascript/game/login/login-response.ts",
+    // 进入
+    "schemas/generated/javascript/game/login/enter-game-request.ts",
+//    "schemas/generated/javascript/game/login/enter-game-response.ts",
+    // 玩家数据
+    "schemas/generated/javascript/game/player/player-data.ts",
+    // 同步
+  ]
+}
