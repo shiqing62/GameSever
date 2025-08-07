@@ -2,13 +2,15 @@ include "../login/loginRequest.fbs";
 include "../login/loginResponse.fbs";
 include "../login/enterGameRequest.fbs";
 include "../login/enterGameResponse.fbs";
+include "../syncs/playerEnterPush.fbs";
 namespace Game;
 
 union Payload {
     Game.Login.LoginRequest,
     Game.Login.LoginResponse,
     Game.Login.EnterGameRequest,
-    Game.Login.EnterGameResponse
+    Game.Login.EnterGameResponse,
+    Game.Syncs.PlayerEnterPush,
 }
 
 table Message {

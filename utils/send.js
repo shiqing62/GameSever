@@ -6,6 +6,7 @@ function send(ws,msgId,payload){
 
     const Builder = flatBuffers.Builder;
     const builder = new Builder(1024);
+    console.log('---server msgId: ',msgId);
     const entry = payloadBuilder[msgId];
 
     if (!entry)
@@ -14,6 +15,7 @@ function send(ws,msgId,payload){
         return;
     }
 
+    console.log('---server payloadType: ',entry.payloadType);
     const payloadOffset = entry.build(builder,payload);
     Message.startMessage(builder);
     Message.addMsgId(builder,msgId);

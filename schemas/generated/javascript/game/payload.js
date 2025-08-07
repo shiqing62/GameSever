@@ -9,6 +9,7 @@ const enter_game_request_js_1 = require("../game/login/enter-game-request.js");
 const enter_game_response_js_1 = require("../game/login/enter-game-response.js");
 const login_request_js_1 = require("../game/login/login-request.js");
 const login_response_js_1 = require("../game/login/login-response.js");
+const player_enter_push_js_1 = require("../game/syncs/player-enter-push.js");
 var Payload;
 (function (Payload) {
     Payload[Payload["NONE"] = 0] = "NONE";
@@ -16,6 +17,7 @@ var Payload;
     Payload[Payload["Game_Login_LoginResponse"] = 2] = "Game_Login_LoginResponse";
     Payload[Payload["Game_Login_EnterGameRequest"] = 3] = "Game_Login_EnterGameRequest";
     Payload[Payload["Game_Login_EnterGameResponse"] = 4] = "Game_Login_EnterGameResponse";
+    Payload[Payload["Game_Syncs_PlayerEnterPush"] = 5] = "Game_Syncs_PlayerEnterPush";
 })(Payload || (exports.Payload = Payload = {}));
 function unionToPayload(type, accessor) {
     switch (Payload[type]) {
@@ -24,6 +26,7 @@ function unionToPayload(type, accessor) {
         case 'Game_Login_LoginResponse': return accessor(new login_response_js_1.LoginResponse());
         case 'Game_Login_EnterGameRequest': return accessor(new enter_game_request_js_1.EnterGameRequest());
         case 'Game_Login_EnterGameResponse': return accessor(new enter_game_response_js_1.EnterGameResponse());
+        case 'Game_Syncs_PlayerEnterPush': return accessor(new player_enter_push_js_1.PlayerEnterPush());
         default: return null;
     }
 }
@@ -34,6 +37,7 @@ function unionListToPayload(type, accessor, index) {
         case 'Game_Login_LoginResponse': return accessor(index, new login_response_js_1.LoginResponse());
         case 'Game_Login_EnterGameRequest': return accessor(index, new enter_game_request_js_1.EnterGameRequest());
         case 'Game_Login_EnterGameResponse': return accessor(index, new enter_game_response_js_1.EnterGameResponse());
+        case 'Game_Syncs_PlayerEnterPush': return accessor(index, new player_enter_push_js_1.PlayerEnterPush());
         default: return null;
     }
 }

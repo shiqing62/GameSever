@@ -34,6 +34,16 @@ function handle(ws,payload,players){
     // 重新封装视野内敌人的数据
     const visiblePlayers = Array.from(players).filter(([key,_]) => key !== uid).map(([_,value]) => value);
     send(ws,MsgIds.ResponseId.EnterGame,{selfPlayerData,visiblePlayers});
+
+    // 通知给相互视野内的其他玩家
+    for (const [otherUid,player] of players.entries()){
+        if (otherUid === uid) continue;
+        if (player.roomId !== selfPlayerData.roomId) continue;
+
+        //TODO 后期增加可视范围
+
+        send(player.ws,MsgIds.ServerPushId.PlayerEnter,{playerData:selfPlayerData});
+    }
 }
 
 module.exports = {handle};

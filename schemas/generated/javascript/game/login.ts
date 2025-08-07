@@ -3,3 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 export { EnterGameRequest } from './login/enter-game-request.js';
+export { EnterGameResponse } from './login/enter-game-response.js';
+export { LoginRequest } from './login/login-request.js';
+export { LoginResponse } from './login/login-response.js';

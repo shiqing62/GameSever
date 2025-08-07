@@ -7,3 +7,4 @@ export { Payload } from './game/payload.js';
 export * as Common from './game/common.js';
 export * as Login from './game/login.js';
 export * as Player from './game/player.js';
+export * as Syncs from './game/syncs.js';

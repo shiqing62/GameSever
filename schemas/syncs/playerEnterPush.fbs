@@ -1,0 +1,6 @@
+include "../player/playerData.fbs";
+namespace Game.Syncs;
+
+table PlayerEnterPush{
+    playerData:Game.Player.PlayerData;
+}

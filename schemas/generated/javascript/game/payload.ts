@@ -6,6 +6,7 @@ import { EnterGameRequest } from '../game/login/enter-game-request.js';
 import { EnterGameResponse } from '../game/login/enter-game-response.js';
 import { LoginRequest } from '../game/login/login-request.js';
 import { LoginResponse } from '../game/login/login-response.js';
+import { PlayerEnterPush } from '../game/syncs/player-enter-push.js';
 
 
 export enum Payload {
@@ -13,34 +14,37 @@ export enum Payload {
   Game_Login_LoginRequest = 1,
   Game_Login_LoginResponse = 2,
   Game_Login_EnterGameRequest = 3,
-  Game_Login_EnterGameResponse = 4
+  Game_Login_EnterGameResponse = 4,
+  Game_Syncs_PlayerEnterPush = 5
 }
 
 export function unionToPayload(
   type: Payload,
-  accessor: (obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|null
-): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|null {
+  accessor: (obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null
+): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null {
   switch(Payload[type]) {
     case 'NONE': return null; 
     case 'Game_Login_LoginRequest': return accessor(new LoginRequest())! as LoginRequest;
     case 'Game_Login_LoginResponse': return accessor(new LoginResponse())! as LoginResponse;
     case 'Game_Login_EnterGameRequest': return accessor(new EnterGameRequest())! as EnterGameRequest;
     case 'Game_Login_EnterGameResponse': return accessor(new EnterGameResponse())! as EnterGameResponse;
+    case 'Game_Syncs_PlayerEnterPush': return accessor(new PlayerEnterPush())! as PlayerEnterPush;
     default: return null;
   }
 }
 
 export function unionListToPayload(
   type: Payload, 
-  accessor: (index: number, obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|null, 
+  accessor: (index: number, obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null, 
   index: number
-): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|null {
+): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null {
   switch(Payload[type]) {
     case 'NONE': return null; 
     case 'Game_Login_LoginRequest': return accessor(index, new LoginRequest())! as LoginRequest;
     case 'Game_Login_LoginResponse': return accessor(index, new LoginResponse())! as LoginResponse;
     case 'Game_Login_EnterGameRequest': return accessor(index, new EnterGameRequest())! as EnterGameRequest;
     case 'Game_Login_EnterGameResponse': return accessor(index, new EnterGameResponse())! as EnterGameResponse;
+    case 'Game_Syncs_PlayerEnterPush': return accessor(index, new PlayerEnterPush())! as PlayerEnterPush;
     default: return null;
   }
 }

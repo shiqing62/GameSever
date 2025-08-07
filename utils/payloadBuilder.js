@@ -8,7 +8,7 @@ const LoginResponse = LoginResponseModule.LoginResponse;
 const PayloadModule = require('../schemas/generated/javascript/game/payload.js');
 const PayloadType = PayloadModule.Payload;
 const {Vec3} = require('../schemas/generated/javascript/game/common/vec3.js');
-
+const {PlayerEnterPush} = require("../schemas/generated/javascript/game/syncs/player-enter-push");
 
 const payloadBuilder = {
     // 登录响应
@@ -38,6 +38,18 @@ const payloadBuilder = {
             EnterGameResponse.addSelfPlayer(builder,selfPlayerDataOffset);
             EnterGameResponse.addVisiblePlayers(builder,visibleVec);
             return EnterGameResponse.endEnterGameResponse(builder);
+        }
+    },
+
+    // 其他玩家进入时通知给相互视野内的玩家
+    [MsgIds.ServerPushId.PlayerEnter]:{
+        payloadType: PayloadType.Game_Syncs_PlayerEnterPush,
+        build:(builder,payload) => {
+            const {playerData} = payload;
+            const playerDataOffset = buildPlayerData(builder,playerData);
+            PlayerEnterPush.startPlayerEnterPush(builder);
+            PlayerEnterPush.addPlayerData(builder,playerDataOffset);
+            return PlayerEnterPush.endPlayerEnterPush(builder);
         }
     }
 };
