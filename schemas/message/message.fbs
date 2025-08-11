@@ -3,6 +3,9 @@ include "../login/loginResponse.fbs";
 include "../login/enterGameRequest.fbs";
 include "../login/enterGameResponse.fbs";
 include "../syncs/playerEnterPush.fbs";
+include "../syncs/playerExitPush.fbs";
+include "../syncs/playerMoveRequest.fbs";
+include "../syncs/playerMovePush.fbs";
 namespace Game;
 
 union Payload {
@@ -11,6 +14,9 @@ union Payload {
     Game.Login.EnterGameRequest,
     Game.Login.EnterGameResponse,
     Game.Syncs.PlayerEnterPush,
+    Game.Syncs.PlayerExitPush,
+    Game.Syncs.PlayerMoveRequest,
+    Game.Syncs.PlayerMovePush,
 }
 
 table Message {

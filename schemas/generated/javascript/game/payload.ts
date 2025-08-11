@@ -7,6 +7,9 @@ import { EnterGameResponse } from '../game/login/enter-game-response.js';
 import { LoginRequest } from '../game/login/login-request.js';
 import { LoginResponse } from '../game/login/login-response.js';
 import { PlayerEnterPush } from '../game/syncs/player-enter-push.js';
+import { PlayerExitPush } from '../game/syncs/player-exit-push.js';
+import { PlayerMovePush } from '../game/syncs/player-move-push.js';
+import { PlayerMoveRequest } from '../game/syncs/player-move-request.js';
 
 
 export enum Payload {
@@ -15,13 +18,16 @@ export enum Payload {
   Game_Login_LoginResponse = 2,
   Game_Login_EnterGameRequest = 3,
   Game_Login_EnterGameResponse = 4,
-  Game_Syncs_PlayerEnterPush = 5
+  Game_Syncs_PlayerEnterPush = 5,
+  Game_Syncs_PlayerExitPush = 6,
+  Game_Syncs_PlayerMoveRequest = 7,
+  Game_Syncs_PlayerMovePush = 8
 }
 
 export function unionToPayload(
   type: Payload,
-  accessor: (obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null
-): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null {
+  accessor: (obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|null
+): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|null {
   switch(Payload[type]) {
     case 'NONE': return null; 
     case 'Game_Login_LoginRequest': return accessor(new LoginRequest())! as LoginRequest;
@@ -29,15 +35,18 @@ export function unionToPayload(
     case 'Game_Login_EnterGameRequest': return accessor(new EnterGameRequest())! as EnterGameRequest;
     case 'Game_Login_EnterGameResponse': return accessor(new EnterGameResponse())! as EnterGameResponse;
     case 'Game_Syncs_PlayerEnterPush': return accessor(new PlayerEnterPush())! as PlayerEnterPush;
+    case 'Game_Syncs_PlayerExitPush': return accessor(new PlayerExitPush())! as PlayerExitPush;
+    case 'Game_Syncs_PlayerMoveRequest': return accessor(new PlayerMoveRequest())! as PlayerMoveRequest;
+    case 'Game_Syncs_PlayerMovePush': return accessor(new PlayerMovePush())! as PlayerMovePush;
     default: return null;
   }
 }
 
 export function unionListToPayload(
   type: Payload, 
-  accessor: (index: number, obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null, 
+  accessor: (index: number, obj:EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest) => EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|null, 
   index: number
-): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|null {
+): EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|null {
   switch(Payload[type]) {
     case 'NONE': return null; 
     case 'Game_Login_LoginRequest': return accessor(index, new LoginRequest())! as LoginRequest;
@@ -45,6 +54,9 @@ export function unionListToPayload(
     case 'Game_Login_EnterGameRequest': return accessor(index, new EnterGameRequest())! as EnterGameRequest;
     case 'Game_Login_EnterGameResponse': return accessor(index, new EnterGameResponse())! as EnterGameResponse;
     case 'Game_Syncs_PlayerEnterPush': return accessor(index, new PlayerEnterPush())! as PlayerEnterPush;
+    case 'Game_Syncs_PlayerExitPush': return accessor(index, new PlayerExitPush())! as PlayerExitPush;
+    case 'Game_Syncs_PlayerMoveRequest': return accessor(index, new PlayerMoveRequest())! as PlayerMoveRequest;
+    case 'Game_Syncs_PlayerMovePush': return accessor(index, new PlayerMovePush())! as PlayerMovePush;
     default: return null;
   }
 }

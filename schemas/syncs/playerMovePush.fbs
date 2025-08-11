@@ -1,0 +1,7 @@
+include "../Common/Vec3.fbs";
+namespace Game.Syncs;
+
+table PlayerMovePush{
+    uid: uint;
+    pos: Game.Common.Vec3;
+}

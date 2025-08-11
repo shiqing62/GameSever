@@ -1,0 +1,5 @@
+namespace Game.Syncs;
+
+table PlayerExitPush{
+    uid: uint;
+}

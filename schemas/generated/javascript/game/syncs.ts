@@ -3,3 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 export { PlayerEnterPush } from './syncs/player-enter-push.js';
+export { PlayerExitPush } from './syncs/player-exit-push.js';
+export { PlayerMovePush } from './syncs/player-move-push.js';
+export { PlayerMoveRequest } from './syncs/player-move-request.js';

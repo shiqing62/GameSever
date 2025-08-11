@@ -14,7 +14,7 @@
   },
   "include": [
 //    "schemas/generated/javascript/game/common/vec3.ts",
-//    "schemas/generated/javascript/game/message.ts",
+    "schemas/generated/javascript/game/message.ts",
     // 登录
 //    "schemas/generated/javascript/game/login/login-request.ts",
 //    "schemas/generated/javascript/game/login/login-response.ts",
@@ -24,6 +24,9 @@
     // 玩家数据
 //    "schemas/generated/javascript/game/player/player-data.ts",
     // 同步
-//    "schemas/generated/javascript/game/syncs/player-enter-push.ts"
+//    "schemas/generated/javascript/game/syncs/player-enter-push.ts",
+//    "schemas/generated/javascript/game/syncs/player-exit-push.ts",
+//    "schemas/generated/javascript/game/syncs/player-move-request.ts",
+    "schemas/generated/javascript/game/syncs/player-move-push.ts"
   ]
 }

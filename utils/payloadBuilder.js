@@ -8,7 +8,8 @@ const LoginResponse = LoginResponseModule.LoginResponse;
 const PayloadModule = require('../schemas/generated/javascript/game/payload.js');
 const PayloadType = PayloadModule.Payload;
 const {Vec3} = require('../schemas/generated/javascript/game/common/vec3.js');
-const {PlayerEnterPush} = require("../schemas/generated/javascript/game/syncs/player-enter-push");
+const {PlayerEnterPush} = require("../schemas/generated/javascript/game/syncs/player-enter-push.js");
+const {PlayerMovePush} = require("../schemas/generated/javascript/game/syncs/player-move-push.js");
 
 const payloadBuilder = {
     // 登录响应
@@ -50,6 +51,20 @@ const payloadBuilder = {
             PlayerEnterPush.startPlayerEnterPush(builder);
             PlayerEnterPush.addPlayerData(builder,playerDataOffset);
             return PlayerEnterPush.endPlayerEnterPush(builder);
+        }
+    },
+
+    // 玩家移动
+    [MsgIds.ServerPushId.PlayerMove]:{
+        payloadType: PayloadType.Game_Syncs_PlayerMovePush,
+        build:(builder,payload) => {
+            const {uid,pos} = payload;
+            const posOffset = Vec3.createVec3(builder,pos.x,pos.y,pos.z);
+
+            PlayerMovePush.startPlayerMovePush(builder);
+            PlayerMovePush.addUid(builder,uid);
+            PlayerMovePush.addPos(builder,posOffset);
+            return PlayerMovePush.endPlayerMovePush(builder);
         }
     }
 };
