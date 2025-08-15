@@ -1,0 +1,12 @@
+include "../Common/Vec3.fbs";
+namespace Game.Syncs;
+
+table DamageSyncs{
+    attackerId:uint;  // 攻击者
+    targetId:uint;  // 受击者
+    skillId:int;  // 技能ID，用来确定受击特效
+    damage:float;
+    pos:Game.Common.Vec3;  // 受击特效的位置
+}
+
+root_type DamageSyncs;

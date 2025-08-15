@@ -23,10 +23,20 @@
 //    "schemas/generated/javascript/game/login/enter-game-response.ts",
     // 玩家数据
 //    "schemas/generated/javascript/game/player/player-data.ts",
+//    "schemas/generated/javascript/game/player/player-state-update.ts",
     // 同步
 //    "schemas/generated/javascript/game/syncs/player-enter-push.ts",
 //    "schemas/generated/javascript/game/syncs/player-exit-push.ts",
 //    "schemas/generated/javascript/game/syncs/player-move-request.ts",
-    "schemas/generated/javascript/game/syncs/player-move-push.ts"
+//    "schemas/generated/javascript/game/syncs/player-move-push.ts",
+//    "schemas/generated/javascript/game/syncs/damage-syncs.ts",
+//    "schemas/generated/javascript/game/syncs/skill-type.ts",
+//    "schemas/generated/javascript/game/syncs/projectile-data.ts",
+//    "schemas/generated/javascript/game/syncs/random-point-data.ts",
+//    "schemas/generated/javascript/game/syncs/attached-data.ts",
+//    "schemas/generated/javascript/game/syncs/melee-data.ts",
+//    "schemas/generated/javascript/game/syncs/skill-data.ts",
+//    "schemas/generated/javascript/game/syncs/skill-syncs.ts",
+    "schemas/generated/javascript/game/syncs/player-state-syncs.ts"
   ]
 }

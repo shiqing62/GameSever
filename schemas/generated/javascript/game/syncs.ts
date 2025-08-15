@@ -2,7 +2,16 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
+export { AttachedData } from './syncs/attached-data.js';
+export { DamageSyncs } from './syncs/damage-syncs.js';
+export { MeleeData } from './syncs/melee-data.js';
 export { PlayerEnterPush } from './syncs/player-enter-push.js';
 export { PlayerExitPush } from './syncs/player-exit-push.js';
 export { PlayerMovePush } from './syncs/player-move-push.js';
 export { PlayerMoveRequest } from './syncs/player-move-request.js';
+export { PlayerStateSyncs } from './syncs/player-state-syncs.js';
+export { ProjectileData } from './syncs/projectile-data.js';
+export { RandomPointData } from './syncs/random-point-data.js';
+export { SkillData } from './syncs/skill-data.js';
+export { SkillSyncs } from './syncs/skill-syncs.js';
+export { SkillType } from './syncs/skill-type.js';

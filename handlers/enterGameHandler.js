@@ -1,8 +1,8 @@
 const MsgIds = require('../MsgIds.js');
 const { send } = require('../utils/send.js');
+const {PlayerDataWrapper} = require('../utils/playerDataWrapper.js');
 
 function handle(ws,payload,players){
-
     // 初始化一个playerData
     const uid = payload.uid();
     // roomId 服务器自动分房间
@@ -12,33 +12,40 @@ function handle(ws,payload,players){
     const posX = Math.floor(Math.random() * 7) - 3;
     console.log("--->>>posX: ",posX);
     // 初始化selfPlayerData
-    const selfPlayerData = {
-        uid,
-        nickName: "hahaha!!",
+    // const selfPlayerData = {
+    //     uid,
+    //     nickName: "hahaha!!",
+    //     characterId: charId,
+    //     roomId: 1,
+    //     level: 1,
+    //     hp: 100,
+    //     score: 0,
+    //     ranking: 0,
+    //     pos: { x: posX, y: 0, z: 0 },
+    //     weapons: [],
+    //     passives: [],
+    //     pets: [],
+    //     ws
+    // };
+
+    // 初始化一个角色的数据
+    const selfPlayerData = new PlayerDataWrapper(null,ws,{
+        uid: uid,
         characterId: charId,
-        roomId: 1,
-        level: 1,
-        hp: 100,
-        score: 0,
-        ranking: 0,
-        pos: { x: posX, y: 0, z: 0 },
-        weapons: [],
-        passives: [],
-        pets: [],
-        ws
-    };
+        pos: { x: posX, y: 0, z: 0 }
+    });
 
     players.set(uid,selfPlayerData);
     console.log("--->>>players.size: ",players.size);
 
     // 重新封装视野内敌人的数据
     const visiblePlayers = Array.from(players).filter(([key,_]) => key !== uid).map(([_,value]) => value);
-    send(ws,MsgIds.ResponseId.EnterGame,{selfPlayerData,visiblePlayers});
+    send(ws,MsgIds.ResponseId.EnterGame,{playerData: selfPlayerData,visiblePlayers});
 
     // 通知给相互视野内的其他玩家
     for (const [otherUid,player] of players.entries()){
         if (otherUid === uid) continue;
-        if (player.roomId !== selfPlayerData.roomId) continue;
+        if (player.roomId !== selfPlayerData.roomId()) continue;
 
         //TODO 后期增加可视范围
 

@@ -11,14 +11,19 @@ function handle(ws,payload,players){
 
     // 新的位置坐标
     const newPos = payload.pos();
-    // 玩家坐标重新赋值
-    player.pos = {
-        x: newPos.x(),
-        y: newPos.y(),
-        z: newPos.z()
-    };
-    // 更新map信息
-    players.set(uid,player);
+    // 更新位置
+    player.pos.x = newPos.x();
+    player.pos.y = newPos.y();
+    player.pos.z = newPos.z();
+
+    // // 玩家坐标重新赋值
+    // player.pos = {
+    //     x: newPos.x(),
+    //     y: newPos.y(),
+    //     z: newPos.z()
+    // };
+    // // 更新map信息
+    // players.set(uid,player);
 }
 
 function handleMoveSyncs(ws,selfPlayer,players)

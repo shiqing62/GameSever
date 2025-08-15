@@ -9,10 +9,13 @@ const enter_game_request_js_1 = require("../game/login/enter-game-request.js");
 const enter_game_response_js_1 = require("../game/login/enter-game-response.js");
 const login_request_js_1 = require("../game/login/login-request.js");
 const login_response_js_1 = require("../game/login/login-response.js");
+const damage_syncs_js_1 = require("../game/syncs/damage-syncs.js");
 const player_enter_push_js_1 = require("../game/syncs/player-enter-push.js");
 const player_exit_push_js_1 = require("../game/syncs/player-exit-push.js");
 const player_move_push_js_1 = require("../game/syncs/player-move-push.js");
 const player_move_request_js_1 = require("../game/syncs/player-move-request.js");
+const player_state_syncs_js_1 = require("../game/syncs/player-state-syncs.js");
+const skill_syncs_js_1 = require("../game/syncs/skill-syncs.js");
 var Payload;
 (function (Payload) {
     Payload[Payload["NONE"] = 0] = "NONE";
@@ -24,6 +27,9 @@ var Payload;
     Payload[Payload["Game_Syncs_PlayerExitPush"] = 6] = "Game_Syncs_PlayerExitPush";
     Payload[Payload["Game_Syncs_PlayerMoveRequest"] = 7] = "Game_Syncs_PlayerMoveRequest";
     Payload[Payload["Game_Syncs_PlayerMovePush"] = 8] = "Game_Syncs_PlayerMovePush";
+    Payload[Payload["Game_Syncs_SkillSyncs"] = 9] = "Game_Syncs_SkillSyncs";
+    Payload[Payload["Game_Syncs_DamageSyncs"] = 10] = "Game_Syncs_DamageSyncs";
+    Payload[Payload["Game_Syncs_PlayerStateSyncs"] = 11] = "Game_Syncs_PlayerStateSyncs";
 })(Payload || (exports.Payload = Payload = {}));
 function unionToPayload(type, accessor) {
     switch (Payload[type]) {
@@ -36,6 +42,9 @@ function unionToPayload(type, accessor) {
         case 'Game_Syncs_PlayerExitPush': return accessor(new player_exit_push_js_1.PlayerExitPush());
         case 'Game_Syncs_PlayerMoveRequest': return accessor(new player_move_request_js_1.PlayerMoveRequest());
         case 'Game_Syncs_PlayerMovePush': return accessor(new player_move_push_js_1.PlayerMovePush());
+        case 'Game_Syncs_SkillSyncs': return accessor(new skill_syncs_js_1.SkillSyncs());
+        case 'Game_Syncs_DamageSyncs': return accessor(new damage_syncs_js_1.DamageSyncs());
+        case 'Game_Syncs_PlayerStateSyncs': return accessor(new player_state_syncs_js_1.PlayerStateSyncs());
         default: return null;
     }
 }
@@ -50,6 +59,9 @@ function unionListToPayload(type, accessor, index) {
         case 'Game_Syncs_PlayerExitPush': return accessor(index, new player_exit_push_js_1.PlayerExitPush());
         case 'Game_Syncs_PlayerMoveRequest': return accessor(index, new player_move_request_js_1.PlayerMoveRequest());
         case 'Game_Syncs_PlayerMovePush': return accessor(index, new player_move_push_js_1.PlayerMovePush());
+        case 'Game_Syncs_SkillSyncs': return accessor(index, new skill_syncs_js_1.SkillSyncs());
+        case 'Game_Syncs_DamageSyncs': return accessor(index, new damage_syncs_js_1.DamageSyncs());
+        case 'Game_Syncs_PlayerStateSyncs': return accessor(index, new player_state_syncs_js_1.PlayerStateSyncs());
         default: return null;
     }
 }

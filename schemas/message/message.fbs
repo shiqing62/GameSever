@@ -6,6 +6,9 @@ include "../syncs/playerEnterPush.fbs";
 include "../syncs/playerExitPush.fbs";
 include "../syncs/playerMoveRequest.fbs";
 include "../syncs/playerMovePush.fbs";
+include "../syncs/skillSyncs.fbs";
+include "../syncs/damageSyncs.fbs";
+include "../syncs/playerStateSyncs.fbs";
 namespace Game;
 
 union Payload {
@@ -17,6 +20,9 @@ union Payload {
     Game.Syncs.PlayerExitPush,
     Game.Syncs.PlayerMoveRequest,
     Game.Syncs.PlayerMovePush,
+    Game.Syncs.SkillSyncs,
+    Game.Syncs.DamageSyncs,
+    Game.Syncs.PlayerStateSyncs
 }
 
 table Message {
