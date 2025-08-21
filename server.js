@@ -11,20 +11,21 @@ const enterGameHandler = require('./handlers/enterGameHandler.js');
 const playerMoveHandler = require('./handlers/playerMoveHandler');
 const skillSyncsHandler = require('./handlers/skillSyncsHandler.js');
 const damageSyncsHandler = require('./handlers/damageSyncsHandler.js');
+const levelChangeHandler = require('./handlers/playerLevelChangeHandler.js');
 
 // 引入 FBS 生成的请求结构
 const { EnterGameRequest } = require('./schemas/generated/javascript/game/login/enter-game-request.js');
 const {PlayerMoveRequest} = require("./schemas/generated/javascript/game/syncs/player-move-request.js");
 const {DamageSyncs} = require("./schemas/generated/javascript/game/syncs/damage-syncs.js");
 const {SkillSyncs} = require("./schemas/generated/javascript/game/syncs/skill-syncs");
+const {PlayerLevelChangeRequest} = require("./schemas/generated/javascript/game/syncs/player-level-change-request");
 
 const players = new Map();
-const wss = new WebSocket.Server({port:8080});
+// const wss = new WebSocket.Server({port:8080});
+const wss = new WebSocket.Server({ host: "0.0.0.0", port: 8080 });
 
 // 其他玩家信息同步间隔
 const SYNCS_INTERVAL = 100;  // 单位:毫秒
-
-
 
 wss.on('connection',function connection (ws){
     console.log("--->>>client connection!!!!")
@@ -58,6 +59,10 @@ wss.on('connection',function connection (ws){
                 const damageData = message.payload(new DamageSyncs());
                 damageSyncsHandler.handle(ws,damageData,players);
                 break;
+            case Payload.Game_Syncs_PlayerLevelChangeRequest:  // 等级变更请求
+                const levelChangeReq = message.payload(new PlayerLevelChangeRequest());
+                levelChangeHandler.handle(ws,levelChangeReq,players);
+                break;
             default:
                 console.log('Unknown payload type:', payloadType);
         }
@@ -75,6 +80,7 @@ wss.on('connection',function connection (ws){
         }
     });
 });
+
 
 //TODO 根据玩家位置变化幅度改为动态频率
 setInterval(()=>{

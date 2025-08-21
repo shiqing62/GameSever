@@ -1,0 +1,8 @@
+namespace Game.Syncs;
+
+table PlayerLevelChangeRequest{
+    uid: uint;
+    deltaLevel: int;    // 等级的变化值，若为负数则为降级
+}
+
+root_type PlayerLevelChangeRequest;

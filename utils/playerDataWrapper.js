@@ -43,6 +43,9 @@ class PlayerDataWrapper{
     get hp() {return this.data.hp;}
     set hp(value) {this.data.hp = value};
 
+    get level() {return this.data.level;}
+    set level(value) {this.data.level = value;}
+
     get pos() {return this.data.pos;}
     set pos(value) {this.data.pos = value;}
 

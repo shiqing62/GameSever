@@ -3,6 +3,7 @@ const MsgIds = {
         Login: 1001,
         EnterGame: 1002,
         PlayerMove: 2003,
+        LevelChange: 4001,
     },
 
     ResponseId:{
