@@ -16,28 +16,28 @@ function handle(ws,payload,players){
     player.pos.y = newPos.y();
     player.pos.z = newPos.z();
 
-    // // 玩家坐标重新赋值
-    // player.pos = {
-    //     x: newPos.x(),
-    //     y: newPos.y(),
-    //     z: newPos.z()
-    // };
-    // // 更新map信息
-    // players.set(uid,player);
+    // 将最新的坐标信息返给玩家
+    if (!ws) return;
+    const moveData = {
+        uid:uid,
+        pos:{
+            x:player.pos.x,
+            y:player.pos.y,
+            z:player.pos.z
+        }
+    }
+    send(ws,MsgIds.ResponseId.PlayerMove,{moveData})
 }
 
-function handleMoveSyncs(ws,selfPlayer,players)
+function handleMoveSyncs(ws,selfPlayer,visiblePlayers)
 {
-    const uid = selfPlayer.uid;
-    // 同步给其他玩家
-    for (const [otherUid,otherPlayer] of players.entries()){
-        // if (otherUid === uid) continue;
-        // if (otherPlayer.roomId !== selfPlayer.roomId) continue;
+    const playersPos = visiblePlayers.map(p=>({
+        uid:p.uid,
+        pos:p.pos
+    }));
 
-        //TODO 后期增加可视范围
-
-        send(otherPlayer.ws,MsgIds.ServerPushId.PlayerMove,{uid:uid,pos:selfPlayer.pos});
-    }
+    // 统一推送
+    send(ws,MsgIds.ServerPushId.PlayerMove,{playersPos});
 }
 
 module.exports = {handle,handleMoveSyncs};

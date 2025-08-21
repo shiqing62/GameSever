@@ -14,7 +14,7 @@
   },
   "include": [
 //    "schemas/generated/javascript/game/common/vec3.ts",
-//    "schemas/generated/javascript/game/message.ts",
+    "schemas/generated/javascript/game/message.ts",
     // 登录
 //    "schemas/generated/javascript/game/login/login-request.ts",
 //    "schemas/generated/javascript/game/login/login-response.ts",
@@ -28,7 +28,7 @@
 //    "schemas/generated/javascript/game/syncs/player-enter-push.ts",
 //    "schemas/generated/javascript/game/syncs/player-exit-push.ts",
 //    "schemas/generated/javascript/game/syncs/player-move-request.ts",
-    "schemas/generated/javascript/game/syncs/player-move-push.ts",
+//    "schemas/generated/javascript/game/syncs/player-move-push.ts",
 //    "schemas/generated/javascript/game/syncs/damage-syncs.ts",
 //    "schemas/generated/javascript/game/syncs/skill-type.ts",
 //    "schemas/generated/javascript/game/syncs/projectile-data.ts",
@@ -37,6 +37,7 @@
 //    "schemas/generated/javascript/game/syncs/melee-data.ts",
 //    "schemas/generated/javascript/game/syncs/skill-data.ts",
 //    "schemas/generated/javascript/game/syncs/skill-syncs.ts",
-//    "schemas/generated/javascript/game/syncs/player-state-syncs.ts"
+//    "schemas/generated/javascript/game/syncs/player-state-syncs.ts",
+//    "schemas/generated/javascript/game/syncs/player-move-response.ts"
   ]
 }

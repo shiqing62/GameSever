@@ -9,8 +9,10 @@ import { LoginResponse } from '../game/login/login-response.js';
 import { DamageSyncs } from '../game/syncs/damage-syncs.js';
 import { PlayerEnterPush } from '../game/syncs/player-enter-push.js';
 import { PlayerExitPush } from '../game/syncs/player-exit-push.js';
+import { PlayerLevelChangeRequest } from '../game/syncs/player-level-change-request.js';
 import { PlayerMovePush } from '../game/syncs/player-move-push.js';
 import { PlayerMoveRequest } from '../game/syncs/player-move-request.js';
+import { PlayerMoveResponse } from '../game/syncs/player-move-response.js';
 import { PlayerStateSyncs } from '../game/syncs/player-state-syncs.js';
 import { SkillSyncs } from '../game/syncs/skill-syncs.js';
 
@@ -24,16 +26,18 @@ export enum Payload {
   Game_Syncs_PlayerEnterPush = 5,
   Game_Syncs_PlayerExitPush = 6,
   Game_Syncs_PlayerMoveRequest = 7,
-  Game_Syncs_PlayerMovePush = 8,
-  Game_Syncs_SkillSyncs = 9,
-  Game_Syncs_DamageSyncs = 10,
-  Game_Syncs_PlayerStateSyncs = 11
+  Game_Syncs_PlayerMoveResponse = 8,
+  Game_Syncs_PlayerMovePush = 9,
+  Game_Syncs_SkillSyncs = 10,
+  Game_Syncs_DamageSyncs = 11,
+  Game_Syncs_PlayerStateSyncs = 12,
+  Game_Syncs_PlayerLevelChangeRequest = 13
 }
 
 export function unionToPayload(
   type: Payload,
-  accessor: (obj:DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|PlayerStateSyncs|SkillSyncs) => DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|PlayerStateSyncs|SkillSyncs|null
-): DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|PlayerStateSyncs|SkillSyncs|null {
+  accessor: (obj:DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerLevelChangeRequest|PlayerMovePush|PlayerMoveRequest|PlayerMoveResponse|PlayerStateSyncs|SkillSyncs) => DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerLevelChangeRequest|PlayerMovePush|PlayerMoveRequest|PlayerMoveResponse|PlayerStateSyncs|SkillSyncs|null
+): DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerLevelChangeRequest|PlayerMovePush|PlayerMoveRequest|PlayerMoveResponse|PlayerStateSyncs|SkillSyncs|null {
   switch(Payload[type]) {
     case 'NONE': return null; 
     case 'Game_Login_LoginRequest': return accessor(new LoginRequest())! as LoginRequest;
@@ -43,19 +47,21 @@ export function unionToPayload(
     case 'Game_Syncs_PlayerEnterPush': return accessor(new PlayerEnterPush())! as PlayerEnterPush;
     case 'Game_Syncs_PlayerExitPush': return accessor(new PlayerExitPush())! as PlayerExitPush;
     case 'Game_Syncs_PlayerMoveRequest': return accessor(new PlayerMoveRequest())! as PlayerMoveRequest;
+    case 'Game_Syncs_PlayerMoveResponse': return accessor(new PlayerMoveResponse())! as PlayerMoveResponse;
     case 'Game_Syncs_PlayerMovePush': return accessor(new PlayerMovePush())! as PlayerMovePush;
     case 'Game_Syncs_SkillSyncs': return accessor(new SkillSyncs())! as SkillSyncs;
     case 'Game_Syncs_DamageSyncs': return accessor(new DamageSyncs())! as DamageSyncs;
     case 'Game_Syncs_PlayerStateSyncs': return accessor(new PlayerStateSyncs())! as PlayerStateSyncs;
+    case 'Game_Syncs_PlayerLevelChangeRequest': return accessor(new PlayerLevelChangeRequest())! as PlayerLevelChangeRequest;
     default: return null;
   }
 }
 
 export function unionListToPayload(
   type: Payload, 
-  accessor: (index: number, obj:DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|PlayerStateSyncs|SkillSyncs) => DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|PlayerStateSyncs|SkillSyncs|null, 
+  accessor: (index: number, obj:DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerLevelChangeRequest|PlayerMovePush|PlayerMoveRequest|PlayerMoveResponse|PlayerStateSyncs|SkillSyncs) => DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerLevelChangeRequest|PlayerMovePush|PlayerMoveRequest|PlayerMoveResponse|PlayerStateSyncs|SkillSyncs|null, 
   index: number
-): DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerMovePush|PlayerMoveRequest|PlayerStateSyncs|SkillSyncs|null {
+): DamageSyncs|EnterGameRequest|EnterGameResponse|LoginRequest|LoginResponse|PlayerEnterPush|PlayerExitPush|PlayerLevelChangeRequest|PlayerMovePush|PlayerMoveRequest|PlayerMoveResponse|PlayerStateSyncs|SkillSyncs|null {
   switch(Payload[type]) {
     case 'NONE': return null; 
     case 'Game_Login_LoginRequest': return accessor(index, new LoginRequest())! as LoginRequest;
@@ -65,10 +71,12 @@ export function unionListToPayload(
     case 'Game_Syncs_PlayerEnterPush': return accessor(index, new PlayerEnterPush())! as PlayerEnterPush;
     case 'Game_Syncs_PlayerExitPush': return accessor(index, new PlayerExitPush())! as PlayerExitPush;
     case 'Game_Syncs_PlayerMoveRequest': return accessor(index, new PlayerMoveRequest())! as PlayerMoveRequest;
+    case 'Game_Syncs_PlayerMoveResponse': return accessor(index, new PlayerMoveResponse())! as PlayerMoveResponse;
     case 'Game_Syncs_PlayerMovePush': return accessor(index, new PlayerMovePush())! as PlayerMovePush;
     case 'Game_Syncs_SkillSyncs': return accessor(index, new SkillSyncs())! as SkillSyncs;
     case 'Game_Syncs_DamageSyncs': return accessor(index, new DamageSyncs())! as DamageSyncs;
     case 'Game_Syncs_PlayerStateSyncs': return accessor(index, new PlayerStateSyncs())! as PlayerStateSyncs;
+    case 'Game_Syncs_PlayerLevelChangeRequest': return accessor(index, new PlayerLevelChangeRequest())! as PlayerLevelChangeRequest;
     default: return null;
   }
 }

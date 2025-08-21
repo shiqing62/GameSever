@@ -8,7 +8,8 @@ const MsgIds = {
 
     ResponseId:{
         Login: 1001,
-        EnterGame: 1002
+        EnterGame: 1002,
+        PlayerMove: 2003,
     },
 
     ServerPushId:{

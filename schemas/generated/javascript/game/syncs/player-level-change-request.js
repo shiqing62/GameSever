@@ -34,11 +34,10 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayerMovePush = void 0;
+exports.PlayerLevelChangeRequest = void 0;
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 const flatbuffers = __importStar(require("flatbuffers"));
-const player_move_js_1 = require("../../game/syncs/player-move.js");
-class PlayerMovePush {
+class PlayerLevelChangeRequest {
     constructor() {
         this.bb = null;
         this.bb_pos = 0;
@@ -48,45 +47,45 @@ class PlayerMovePush {
         this.bb = bb;
         return this;
     }
-    static getRootAsPlayerMovePush(bb, obj) {
-        return (obj || new PlayerMovePush()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+    static getRootAsPlayerLevelChangeRequest(bb, obj) {
+        return (obj || new PlayerLevelChangeRequest()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
     }
-    static getSizePrefixedRootAsPlayerMovePush(bb, obj) {
+    static getSizePrefixedRootAsPlayerLevelChangeRequest(bb, obj) {
         bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-        return (obj || new PlayerMovePush()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+        return (obj || new PlayerLevelChangeRequest()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
     }
-    playersPos(index, obj) {
+    uid() {
         const offset = this.bb.__offset(this.bb_pos, 4);
-        return offset ? (obj || new player_move_js_1.PlayerMove()).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+        return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
     }
-    playersPosLength() {
-        const offset = this.bb.__offset(this.bb_pos, 4);
-        return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
+    deltaLevel() {
+        const offset = this.bb.__offset(this.bb_pos, 6);
+        return offset ? this.bb.readInt32(this.bb_pos + offset) : 0;
     }
-    static startPlayerMovePush(builder) {
-        builder.startObject(1);
+    static startPlayerLevelChangeRequest(builder) {
+        builder.startObject(2);
     }
-    static addPlayersPos(builder, playersPosOffset) {
-        builder.addFieldOffset(0, playersPosOffset, 0);
+    static addUid(builder, uid) {
+        builder.addFieldInt32(0, uid, 0);
     }
-    static createPlayersPosVector(builder, data) {
-        builder.startVector(4, data.length, 4);
-        for (let i = data.length - 1; i >= 0; i--) {
-            builder.addOffset(data[i]);
-        }
-        return builder.endVector();
+    static addDeltaLevel(builder, deltaLevel) {
+        builder.addFieldInt32(1, deltaLevel, 0);
     }
-    static startPlayersPosVector(builder, numElems) {
-        builder.startVector(4, numElems, 4);
-    }
-    static endPlayerMovePush(builder) {
+    static endPlayerLevelChangeRequest(builder) {
         const offset = builder.endObject();
         return offset;
     }
-    static createPlayerMovePush(builder, playersPosOffset) {
-        PlayerMovePush.startPlayerMovePush(builder);
-        PlayerMovePush.addPlayersPos(builder, playersPosOffset);
-        return PlayerMovePush.endPlayerMovePush(builder);
+    static finishPlayerLevelChangeRequestBuffer(builder, offset) {
+        builder.finish(offset);
+    }
+    static finishSizePrefixedPlayerLevelChangeRequestBuffer(builder, offset) {
+        builder.finish(offset, undefined, true);
+    }
+    static createPlayerLevelChangeRequest(builder, uid, deltaLevel) {
+        PlayerLevelChangeRequest.startPlayerLevelChangeRequest(builder);
+        PlayerLevelChangeRequest.addUid(builder, uid);
+        PlayerLevelChangeRequest.addDeltaLevel(builder, deltaLevel);
+        return PlayerLevelChangeRequest.endPlayerLevelChangeRequest(builder);
     }
 }
-exports.PlayerMovePush = PlayerMovePush;
+exports.PlayerLevelChangeRequest = PlayerLevelChangeRequest;

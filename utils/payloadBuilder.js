@@ -16,6 +16,8 @@ const {RandomPointData} = require("../schemas/generated/javascript/game/syncs/ra
 const {ProjectileData} = require("../schemas/generated/javascript/game/syncs/projectile-data");
 const {PlayerStateSyncs} = require("../schemas/generated/javascript/game/syncs/player-state-syncs");
 const {PlayerStateFlags} = require("./playerStateFlags");
+const {PlayerMove} = require("../schemas/generated/javascript/game/syncs/player-move");
+const {PlayerMoveResponse} = require("../schemas/generated/javascript/game/syncs/player-move-response");
 
 const payloadBuilder = {
     // 登录响应
@@ -60,16 +62,47 @@ const payloadBuilder = {
         }
     },
 
-    // 玩家移动
+    // 响应自己的移动
+    [MsgIds.ResponseId.PlayerMove]:{
+        payloadType: PayloadType.Game_Syncs_PlayerMoveResponse,
+        build:(builder,payload) =>{
+            const {uid,pos} = payload;
+            const posOffset = Vec3.createVec3(builder,pos.x,pos.y,pos.z);
+            PlayerMoveResponse.startPlayerMoveResponse(builder);
+            PlayerMoveResponse.addUid(builder,uid);
+            PlayerMoveResponse.addPos(builder,posOffset);
+            return PlayerMoveResponse.endPlayerMoveResponse(builder);
+        }
+    },
+
+    // 同步视野内其他玩家移动
     [MsgIds.ServerPushId.PlayerMove]:{
         payloadType: PayloadType.Game_Syncs_PlayerMovePush,
         build:(builder,payload) => {
-            const {uid,pos} = payload;
-            const posOffset = Vec3.createVec3(builder,pos.x,pos.y,pos.z);
+            const {playersPos} = payload;
+            // 构建每个playerMove数据
+            const moveOffsets = [];
+            for (let i = playersPos.length - 1;i >= 0;i--){
+                const p = playersPos[i];
+                const posOffset = Vec3.createVec3(builder,p.pos.x,p.pos.y,p.pos.z);
 
+                PlayerMove.startPlayerMove(builder);
+                PlayerMove.addUid(builder,p.uid);
+                PlayerMove.addPos(builder,posOffset);
+                moveOffsets.push(PlayerMove.endPlayerMove(builder));
+            }
+
+            // 构建vector
+            PlayerMovePush.startPlayerEnterPush(builder,moveOffsets.length);
+            for (let i = moveOffsets.length - 1; i >= 0; i--){
+                builder.addOffset(moveOffsets[i]);
+            }
+
+            const playersPosVector = builder.endVector();
+
+            // 构建PlayerMovePush
             PlayerMovePush.startPlayerMovePush(builder);
-            PlayerMovePush.addUid(builder,uid);
-            PlayerMovePush.addPos(builder,posOffset);
+            PlayerMovePush.addPlayersPos(builder,playersPosVector);
             return PlayerMovePush.endPlayerMovePush(builder);
         }
     },

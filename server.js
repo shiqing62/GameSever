@@ -23,9 +23,10 @@ const {PlayerLevelChangeRequest} = require("./schemas/generated/javascript/game/
 const players = new Map();
 // const wss = new WebSocket.Server({port:8080});
 const wss = new WebSocket.Server({ host: "0.0.0.0", port: 8080 });
-
 // 其他玩家信息同步间隔
 const SYNCS_INTERVAL = 100;  // 单位:毫秒
+const viewRangeWidth = 160;  // 可视范围宽
+const viewRangeHeight = 90;  // 可视范围高
 
 wss.on('connection',function connection (ws){
     console.log("--->>>client connection!!!!")
@@ -87,8 +88,23 @@ setInterval(()=>{
     for (const [uid, player] of players.entries()) {
         if (!player.ws || player.ws.readyState !== WebSocket.OPEN) continue;
 
-        // 筛选视野范围内的玩家（这里简单按同房间）
-        const visiblePlayers = Array.from(players.values()).filter(p => p.uid !== uid && p.roomId === player.roomId);
+        const halfWidth = viewRangeWidth / 2; // 宽的一半
+        const halfHeight = viewRangeHeight / 2; // 高的一半
+
+        // 当前玩家坐标
+        const { x: px, y: pz } = player.pos;
+
+        // 筛选视野范围内的玩家
+        const visiblePlayers = Array.from(player.values()).filter(p => {
+            // 排除自己
+            if (p.uid === uid) return false;
+            // 必须同房间
+            if (p.roomId !== player.roomId) return false;
+            // 判断是否在可视范围内
+            const dx = Math.abs(p.pos.x - px);
+            const dz = Math.abs(p.pos.z - pz);
+            return dx <= halfWidth && dz <= halfHeight;
+        });
 
         if (visiblePlayers.length > 0) {
             // 发送同步消息

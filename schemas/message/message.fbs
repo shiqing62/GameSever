@@ -5,6 +5,7 @@ include "../login/enterGameResponse.fbs";
 include "../syncs/playerEnterPush.fbs";
 include "../syncs/playerExitPush.fbs";
 include "../syncs/playerMoveRequest.fbs";
+include "../syncs/playerMoveResponse.fbs";
 include "../syncs/playerMovePush.fbs";
 include "../syncs/skillSyncs.fbs";
 include "../syncs/damageSyncs.fbs";
@@ -20,6 +21,7 @@ union Payload {
     Game.Syncs.PlayerEnterPush,
     Game.Syncs.PlayerExitPush,
     Game.Syncs.PlayerMoveRequest,
+    Game.Syncs.PlayerMoveResponse,
     Game.Syncs.PlayerMovePush,
     Game.Syncs.SkillSyncs,
     Game.Syncs.DamageSyncs,

@@ -4,7 +4,7 @@
 
 import * as flatbuffers from 'flatbuffers';
 
-import { Vec3 } from '../../game/common/vec3.js';
+import { PlayerMove } from '../../game/syncs/player-move.js';
 
 
 export class PlayerMovePush {
@@ -25,26 +25,34 @@ static getSizePrefixedRootAsPlayerMovePush(bb:flatbuffers.ByteBuffer, obj?:Playe
   return (obj || new PlayerMovePush()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
-uid():number {
+playersPos(index: number, obj?:PlayerMove):PlayerMove|null {
   const offset = this.bb!.__offset(this.bb_pos, 4);
-  return offset ? this.bb!.readUint32(this.bb_pos + offset) : 0;
+  return offset ? (obj || new PlayerMove()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
 }
 
-pos(obj?:Vec3):Vec3|null {
-  const offset = this.bb!.__offset(this.bb_pos, 6);
-  return offset ? (obj || new Vec3()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
+playersPosLength():number {
+  const offset = this.bb!.__offset(this.bb_pos, 4);
+  return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
 }
 
 static startPlayerMovePush(builder:flatbuffers.Builder) {
-  builder.startObject(2);
+  builder.startObject(1);
 }
 
-static addUid(builder:flatbuffers.Builder, uid:number) {
-  builder.addFieldInt32(0, uid, 0);
+static addPlayersPos(builder:flatbuffers.Builder, playersPosOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, playersPosOffset, 0);
 }
 
-static addPos(builder:flatbuffers.Builder, posOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(1, posOffset, 0);
+static createPlayersPosVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+  builder.startVector(4, data.length, 4);
+  for (let i = data.length - 1; i >= 0; i--) {
+    builder.addOffset(data[i]!);
+  }
+  return builder.endVector();
+}
+
+static startPlayersPosVector(builder:flatbuffers.Builder, numElems:number) {
+  builder.startVector(4, numElems, 4);
 }
 
 static endPlayerMovePush(builder:flatbuffers.Builder):flatbuffers.Offset {
@@ -52,4 +60,9 @@ static endPlayerMovePush(builder:flatbuffers.Builder):flatbuffers.Offset {
   return offset;
 }
 
+static createPlayerMovePush(builder:flatbuffers.Builder, playersPosOffset:flatbuffers.Offset):flatbuffers.Offset {
+  PlayerMovePush.startPlayerMovePush(builder);
+  PlayerMovePush.addPlayersPos(builder, playersPosOffset);
+  return PlayerMovePush.endPlayerMovePush(builder);
+}
 }
